@@ -19,6 +19,9 @@ func TestMain(m *testing.M) {
 	if err := unregisterManagedHTTPS(); err != nil {
 		panic(err)
 	}
+	if err := unregisterManagedSSH(); err != nil {
+		panic(err)
+	}
 
 	// Ensure that we are not leaking any pointer handles.
 	pointerHandles.Lock()

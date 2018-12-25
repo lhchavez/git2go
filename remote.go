@@ -241,6 +241,7 @@ type Certificate struct {
 	Hostkey HostkeyCertificate
 }
 
+// HostkeyKind is a bitmask of the available hashes in HostkeyCertificate.
 type HostkeyKind uint
 
 const (

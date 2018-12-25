@@ -151,6 +151,9 @@ func initLibGit2() {
 	if err := registerManagedHTTPS(); err != nil {
 		panic(err)
 	}
+	if err := registerManagedSSH(); err != nil {
+		panic(err)
+	}
 }
 
 // Shutdown frees all the resources acquired by libgit2. Make sure no
@@ -162,6 +165,9 @@ func Shutdown() {
 		panic(err)
 	}
 	if err := unregisterManagedHTTPS(); err != nil {
+		panic(err)
+	}
+	if err := unregisterManagedSSH(); err != nil {
 		panic(err)
 	}
 	pointerHandles.Clear()
