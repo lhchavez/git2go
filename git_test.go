@@ -13,6 +13,13 @@ import (
 func TestMain(m *testing.M) {
 	ret := m.Run()
 
+	if err := unregisterManagedHTTP(); err != nil {
+		panic(err)
+	}
+	if err := unregisterManagedHTTPS(); err != nil {
+		panic(err)
+	}
+
 	// Ensure that we are not leaking any pointer handles.
 	pointerHandles.Lock()
 	if len(pointerHandles.handles) > 0 {

@@ -52,6 +52,19 @@ type Transport struct {
 	ptr *C.git_transport
 }
 
+// SmartProxyOptions gets a copy of the proxy options for this transport.
+func (t *Transport) SmartProxyOptions() (*ProxyOptions, error) {
+	runtime.LockOSThread()
+	defer runtime.UnlockOSThread()
+
+	var cpopts C.git_proxy_options
+	if ret := C.git_transport_smart_proxy_options(&cpopts, t.ptr); ret < 0 {
+		return nil, MakeGitError(ret)
+	}
+
+	return proxyOptionsFromC(&cpopts), nil
+}
+
 // SmartCredentials calls the credentials callback for this transport.
 func (t *Transport) SmartCredentials(user string, methods CredentialType) (*Credential, error) {
 	cred := newCredential()

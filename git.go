@@ -145,12 +145,12 @@ func initLibGit2() {
 		panic("libgit2 was not built with threading support")
 	}
 
-	// This is not something we should be doing, as we may be
-	// stomping all over someone else's setup. The user should do
-	// this themselves or use some binding/wrapper which does it
-	// in such a way that they can be sure they're the only ones
-	// setting it up.
-	C.git_openssl_set_locking()
+	if err := registerManagedHTTP(); err != nil {
+		panic(err)
+	}
+	if err := registerManagedHTTPS(); err != nil {
+		panic(err)
+	}
 }
 
 // Shutdown frees all the resources acquired by libgit2. Make sure no
@@ -158,6 +158,12 @@ func initLibGit2() {
 // After this is called, invoking any function from this library will result in
 // undefined behavior, so make sure this is called carefully.
 func Shutdown() {
+	if err := unregisterManagedHTTP(); err != nil {
+		panic(err)
+	}
+	if err := unregisterManagedHTTPS(); err != nil {
+		panic(err)
+	}
 	pointerHandles.Clear()
 	remotePointers.clear()
 
