@@ -12,6 +12,8 @@ cd "${BUILD_PATH}/build" &&
 cmake -DTHREADSAFE=ON \
       -DBUILD_CLAR=OFF \
       -DBUILD_SHARED_LIBS=OFF \
+      -DUSE_HTTPS=OFF \
+      -DUSE_EXT_HTTP_PARSER=OFF \
       -DCMAKE_C_FLAGS=-fPIC \
       -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
       -DCMAKE_INSTALL_PREFIX="${BUILD_PATH}/install" \
