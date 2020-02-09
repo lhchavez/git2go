@@ -474,12 +474,20 @@ func freeProxyOptions(copts *C.git_proxy_options) {
 	C.free(unsafe.Pointer(copts.url))
 }
 
-// RemoteIsValidName returns whether the remote name is well-formed.
-func RemoteIsValidName(name string) bool {
+// RemoteNameIsValid returns whether the remote name is well-formed.
+func RemoteNameIsValid(name string) (bool, error) {
 	cname := C.CString(name)
 	defer C.free(unsafe.Pointer(cname))
 
-	return C.git_remote_is_valid_name(cname) == 1
+	runtime.LockOSThread()
+	defer runtime.UnlockOSThread()
+
+	var valid C.int
+	ecode := C.git_remote_name_is_valid(&valid, cname)
+	if ecode < 0 {
+		return false, MakeGitError(ecode)
+	}
+	return valid == 1, nil
 }
 
 // Free releases the resources of the Remote.
