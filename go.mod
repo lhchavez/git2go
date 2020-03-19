@@ -1,4 +1,4 @@
-module github.com/lhchavez/git2go
+module github.com/lhchavez/git2go/v29
 
 go 1.13
 
