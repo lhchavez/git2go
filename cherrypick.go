@@ -9,7 +9,6 @@ import (
 )
 
 type CherrypickOptions struct {
-	Version         uint
 	Mainline        uint
 	MergeOptions    MergeOptions
 	CheckoutOptions CheckoutOptions
@@ -17,7 +16,6 @@ type CherrypickOptions struct {
 
 func cherrypickOptionsFromC(c *C.git_cherrypick_options) CherrypickOptions {
 	opts := CherrypickOptions{
-		Version:         uint(c.version),
 		Mainline:        uint(c.mainline),
 		MergeOptions:    mergeOptionsFromC(&c.merge_opts),
 		CheckoutOptions: checkoutOptionsFromC(&c.checkout_opts),

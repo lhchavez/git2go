@@ -137,7 +137,6 @@ const (
 )
 
 type MergeOptions struct {
-	Version   uint
 	TreeFlags MergeTreeFlag
 
 	RenameThreshold uint
@@ -150,7 +149,6 @@ type MergeOptions struct {
 
 func mergeOptionsFromC(opts *C.git_merge_options) MergeOptions {
 	return MergeOptions{
-		Version:         uint(opts.version),
 		TreeFlags:       MergeTreeFlag(opts.flags),
 		RenameThreshold: uint(opts.rename_threshold),
 		TargetLimit:     uint(opts.target_limit),
